@@ -96,6 +96,7 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ vi ~/.profile
 Add the follongline to the bottom
 ```
 export SPLUNK_HOME=/opt/splunkforwarder
+export PATH=$PATH:$SPLUNK_HOME/bin
 ```
 Don't forget to re-source the `.profile` (or close the terminal windows and re-open a new one)
 ```
