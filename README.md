@@ -35,6 +35,13 @@ $ tail -f data.csv
 Go to the Splunk website
 https://splunk.com/en_us/download/universal-forwarder.html
 
+Login
+
+Choose the installation package from the __Linux__ tab.  
+Download the package for __ARM__  
+e.g. [4.14+, 5.x+ kernel Linux distributions, Graviton & Graviton2 Servers 64-bit]
+
+Accept the Software Agreement, and download the `.tgz` file
 
 # Testing and Errors
 Test with python
