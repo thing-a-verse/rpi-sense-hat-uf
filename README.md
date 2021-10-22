@@ -260,6 +260,232 @@ Created symlink /etc/systemd/system/multi-user.target.wants/datalogger.service â
 sudo reboot
 ```
 
+# Testing for Success
+If it's working, there should be a temp on the display every 10 seconds.
+
+To test if splunk is forwarding...
+
+### Is splunk running?
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ splunk status
+splunkd is running (PID: 543).
+splunk helpers are running (PIDs: 974).
+pi@raspberrypi:~/rpi-sense-hat-uf $
+```
+### Is splunk reading my file
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ splunk list inputstatus
+Your session is invalid.  Please login.
+Splunk username: admin
+Password: 
+Cooked:tcp :
+	tcp
+
+Raw:tcp :
+	tcp
+
+TailingProcessor:FileStatus :
+	$SPLUNK_HOME/etc/splunk.version
+		file position = 67
+		file size = 67
+		percent = 100.00
+		type = open file
+
+	$SPLUNK_HOME/var/log/splunk
+		type = directory
+
+	$SPLUNK_HOME/var/log/splunk/metrics.log
+		type = directory
+
+	$SPLUNK_HOME/var/log/splunk/splunk_instrumentation_cloud.log*
+		type = directory
+
+	$SPLUNK_HOME/var/log/splunk/splunkd.log
+		type = directory
+
+	$SPLUNK_HOME/var/log/watchdog/watchdog.log*
+		type = directory
+
+	$SPLUNK_HOME/var/run/splunk/search_telemetry/*search_telemetry.json
+		type = directory
+
+	$SPLUNK_HOME/var/spool/splunk/...stash_new
+		type = directory
+
+	/home/pi/rpi-sense-hat-uf/data.csv
+		file position = 347
+		file size = 347
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/audit.log
+		file position = 74174
+		file size = 74174
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/btool.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/conf.log
+		file position = 1615
+		file size = 1615
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/dfm_stderr.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/dfm_stdout.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/first_install.log
+		file position = 67
+		file size = 67
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/health.log
+		file position = 11407
+		file size = 11407
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/license_usage.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/metrics.log
+		file position = 786432
+		file size = 1517351
+		parent = $SPLUNK_HOME/var/log/splunk/metrics.log
+		percent = 51.83
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/mongod.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/remote_searches.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/scheduler.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/search_messages.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/searchhistory.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/splunk_instrumentation_cloud.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk/splunk_instrumentation_cloud.log*
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/splunkd-utility.log
+		file position = 5555
+		file size = 5555
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/splunkd.log
+		file position = 200248
+		file size = 199159
+		parent = $SPLUNK_HOME/var/log/splunk/splunkd.log
+		percent = 100.55
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/splunkd_access.log
+		file position = 759
+		file size = 759
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/splunkd_stderr.log
+		file position = 1262
+		file size = 1262
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100.00
+		type = open file
+
+	/opt/splunkforwarder/var/log/splunk/splunkd_stdout.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/splunkd_ui_access.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+	/opt/splunkforwarder/var/log/splunk/wlm_monitor.log
+		file position = 0
+		file size = 0
+		parent = $SPLUNK_HOME/var/log/splunk
+		percent = 100
+		type = finished reading
+
+pi@raspberrypi:~/rpi-sense-hat-uf $ 
+```
+
+There it is:
+```
+        /home/pi/rpi-sense-hat-uf/data.csv
+                file position = 347
+                file size = 347
+                percent = 100.00
+                type = open file
+```
+
+
+
 # Testing and Errors
 Test with python
 ``` 
