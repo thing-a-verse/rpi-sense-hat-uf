@@ -2,7 +2,7 @@
 Raspberry Pi - Sense Hat to Splunk UF
 
 # Installation
-##Install the sense-hat libraries for RPi. 
+## Install the sense-hat libraries for RPi. 
 It is probably already installed, but if not ...
 `sudo apt-get install sense-hat`
 
