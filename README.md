@@ -31,7 +31,7 @@ $ tail -f data.csv
 
 # Install the Splunk Universal Forwarder (UF)
 
-## Software
+## Software - How to get it
 ### Method 1
 Go to the Splunk website
 https://splunk.com/en_us/download/universal-forwarder.html
@@ -53,6 +53,14 @@ Run the fetch program
 ```
 $ ./fetchSplunkUF.py
 ```
+# Install the UF
+Try reading the fine manuals, here https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Abouttheuniversalforwarder
+Specifically: https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Installanixuniversalforwarder
+
+or
+
+Install it as the pi user as follows
+
 
 
 
