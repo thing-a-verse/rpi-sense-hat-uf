@@ -46,8 +46,16 @@ Accept the Software Agreement, and download the `.tgz` file
 
 ### Method 2
 ```
-wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
+$ wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
 ```
+### Method 3
+Run the fetch program
+```
+$ ./fetchSplunkUF.py
+```
+
+
+
 
 # Testing and Errors
 Test with python
