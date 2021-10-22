@@ -98,6 +98,29 @@ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
 ```
 Why? Splunk UF has been Compiled with gcc, not native RPi compiler (hypothesis - should check at some point)
 
+If you get an error, just whack a `--force` on the end...
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
+ln: failed to create symbolic link '/lib/ld-linux.so.3': File exists
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3 --force
+pi@raspberrypi:~/rpi-sense-hat-uf $ 
+```
+This is what fixes the error
+```
+pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
+bash: ./splunk: cannot execute binary file: Exec format error
+pi@raspberrypi:/opt/splunkforwarder/bin $ 
+```
+Before and after
+```
+pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
+lrwxrwxrwx 1 root root 24 May  8 00:42 ld-linux.so.3 -> /lib/ld-linux-armhf.so.3
+pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
+lrwxrwxrwx 1 root root 38 Oct 22 18:24 ld-linux.so.3 -> /lib/arm-linux-gnueabihf/ld-linux.so.3
+pi@raspberrypi:/lib $ 
+```
+BTW - this didn't work for me LOL
+
 
 ### ChangeDir to $SPLUNK_HOME/bin
 ```
