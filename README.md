@@ -146,12 +146,12 @@ Please enter an administrator username:
 
 ``` 
 
-Your choice, i use:
+Your choice, i use:  
 `admin`  
 `passw0rd`  
-o
 
-Spplunk should start
+
+Splunk should start
 ```
 pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
 
