@@ -130,6 +130,75 @@ pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 ./splunk start --accept-license
 ```
 
+
+
+If successful, you'll see
+```
+pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
+
+This appears to be your first time running this version of Splunk.
+
+Splunk software must create an administrator account during startup. Otherwise, you cannot log in.
+Create credentials for the administrator account.
+Characters do not appear on the screen when you type in credentials.
+
+Please enter an administrator username:
+
+``` 
+
+Your choice, i use:
+`admin`  
+`passw0rd`  
+o
+
+Spplunk should start
+```
+pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
+
+This appears to be your first time running this version of Splunk.
+
+Splunk software must create an administrator account during startup. Otherwise, you cannot log in.
+Create credentials for the administrator account.
+Characters do not appear on the screen when you type in credentials.
+
+Please enter an administrator username: admin
+Password must contain at least:
+   * 8 total printable ASCII character(s).
+Please enter a new password: 
+Please confirm new password: 
+
+Splunk> Finding your faults, just like mom.
+
+Checking prerequisites...
+	Checking mgmt port [8089]: open
+		Creating: /opt/splunkforwarder/var/lib/splunk
+		Creating: /opt/splunkforwarder/var/run/splunk
+		Creating: /opt/splunkforwarder/var/run/splunk/appserver/i18n
+		Creating: /opt/splunkforwarder/var/run/splunk/appserver/modules/static/css
+		Creating: /opt/splunkforwarder/var/run/splunk/upload
+		Creating: /opt/splunkforwarder/var/run/splunk/search_telemetry
+		Creating: /opt/splunkforwarder/var/spool/splunk
+		Creating: /opt/splunkforwarder/var/spool/dirmoncache
+		Creating: /opt/splunkforwarder/var/lib/splunk/authDb
+		Creating: /opt/splunkforwarder/var/lib/splunk/hashDb
+New certs have been generated in '/opt/splunkforwarder/etc/auth'.
+	Checking conf files for problems...
+	Done
+	Checking default conf files for edits...
+	Validating installed files against hashes from '/opt/splunkforwarder/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm-manifest'
+	All installed files intact.
+	Done
+All preliminary checks passed.
+
+Starting splunk server daemon (splunkd)...  
+Done
+
+
+```
+
+
+
+
 ### Configure the UF to send data 
 (replace 10.10.10.10 with the IP addr of your heavy fowrarder or indexer) 
 ```
