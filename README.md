@@ -32,6 +32,7 @@ $ tail -f data.csv
 # Install the Splunk Universal Forwarder (UF)
 
 ## Software
+### Method 1
 Go to the Splunk website
 https://splunk.com/en_us/download/universal-forwarder.html
 
@@ -42,6 +43,11 @@ Download the package for __ARM__
 e.g. [4.14+, 5.x+ kernel Linux distributions, Graviton & Graviton2 Servers 64-bit]
 
 Accept the Software Agreement, and download the `.tgz` file
+
+### Method 2
+```
+wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
+```
 
 # Testing and Errors
 Test with python
