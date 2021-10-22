@@ -4,21 +4,29 @@ Raspberry Pi - Sense Hat to Splunk UF
 # Installation
 ## Install the sense-hat libraries for RPi. 
 It is probably already installed, but if not ...
-`sudo apt-get install sense-hat`
+```
+$ sudo apt-get install sense-hat
+```
 
 ## Clone this repo
-`git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git`
+```
+$ git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git
+```
 
 
 ## Start the sensor
 In a terminal window, Start the sensor
-`cd rpi-sense-hat-uf`
-`./datalog.py`
+```
+$ cd rpi-sense-hat-uf
+$ ./datalog.py
+```
 
 In another terminal windows, Check the data is being generated. If it's working you'll also see
 the temperature displayed on the LED display
-`cd rpi-sense-hat-uf`
-`tail -f data.csv`
+```
+$ cd rpi-sense-hat-uf
+$ tail -f data.csv
+```
 
 
 # Install the Splunk Universal Forwarder (UF)
