@@ -1,12 +1,23 @@
 [Unit]
 Description=Splunk Universal Forwarder
-After=multi-user.target
+#After=multi-user.target
+After=network.target
 
 [Service]
 Type=idle
-ExecStart=/opt/splunkforwarder/bin/splunk start
+#ExecStart=/opt/splunkforwarder/bin/splunk start
+ExecStart=/opt/splunkforwarder/bin/splunk _internal_launch_under_systemd
+KillMode=mixed
+KillSignal=SIGINT
+TimeoutStop=360
+LimitNOFILE=65536
+SuccessExitStatus=51 52
+RestartPreventExitStatus=51
+RestartForceExitStatus=52
 User=pi
 Group=pi
 
 [Install]
 WantedBy=multi-user.target
+
+# docs.splunk.com/Documentation/Splunk/8.2.2/Admin/RunSplunkassystemservice
