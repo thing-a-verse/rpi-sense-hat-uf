@@ -1,0 +1,10 @@
+[Unit]
+Description=RPi Sensor Hat Datalogger
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/rpi-sense-hat-uf/datalogger.py
+
+[Install]
+WantedBy=multi-user.target
