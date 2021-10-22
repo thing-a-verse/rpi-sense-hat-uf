@@ -7,7 +7,14 @@ Raspberry Pi - Sense Hat to Splunk UF
 # Testing and Errors
 Test with python
 ``` 
-$ python3
+pi@raspberrypi:~ $ python3
+Python 3.7.3 (default, Jan 22 2021, 20:04:44) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+>>> from sense_hat import SenseHat
+>>> sense = SenseHat()
+
 ```
 
 If you get this
