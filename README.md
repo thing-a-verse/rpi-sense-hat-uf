@@ -124,6 +124,7 @@ Backtrack as follows
 ```
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo rm -rf /opt/splunkforwarder
 pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz -C /opt
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
 pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 ./splunk start --accept-license
