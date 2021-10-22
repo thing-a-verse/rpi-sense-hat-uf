@@ -5,6 +5,8 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/usr/bin/python3 /home/pi/rpi-sense-hat-uf/datalogger.py
+User=pi
+Group=pi
 
 [Install]
 WantedBy=multi-user.target

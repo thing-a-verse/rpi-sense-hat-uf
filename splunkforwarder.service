@@ -5,6 +5,8 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/opt/splunkforwarder/bin/splunk start
+User=pi
+Group=pi
 
 [Install]
 WantedBy=multi-user.target
