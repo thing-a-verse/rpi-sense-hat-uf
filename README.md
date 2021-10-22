@@ -214,14 +214,32 @@ This pemits you to control the configuration of the UF from a central location
 
 ### Configure the UF to start at boot
 
-
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo cp splunkforwarder.service /lib/systemd/system
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/splunkforwarder.service 
+```
 ### Configure the datalogger to start at boot
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo cp datalogger.service /lib/systemd/system
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/datalogger.service 
+```
+### Configure systemmd
+Now the unit files have been defined, we need to tell systemd to start it during the boot sequence:
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl daemon-reload
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl enable splunkforwarder.service
+Created symlink /etc/systemd/system/multi-user.target.wants/splunkforwarder.service → /lib/systemd/system/splunkforwarder.service.
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl enable datalogger.service 
+Created symlink /etc/systemd/system/multi-user.target.wants/datalogger.service → /lib/systemd/system/datalogger.service.
+```
 
 
 ## Reboot !
 
 
-
+```
+sudo reboot
+```
 
 # Testing and Errors
 Test with python
