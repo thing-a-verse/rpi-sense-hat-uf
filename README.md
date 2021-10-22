@@ -45,8 +45,15 @@ e.g. [4.14+, 5.x+ kernel Linux distributions, Graviton & Graviton2 Servers 64-bi
 Accept the Software Agreement, and download the `.tgz` file
 
 ### Method 2
+If you are using RPi 4 ... You can use ARMv8 code in the latest veresion 8.2.2.1 (or whatever)
 ```
 $ wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
+
+
+```
+or, if you have an RPi 3 ... get the older ARMv6 code from v8.1.4
+```
+wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
 ```
 ### Method 3
 Run the fetch program
@@ -61,11 +68,19 @@ Specifically: https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/In
 or
 
 ### Install it as the pi user as follows
-
+RPi 4...
 ```
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz -C /opt
 
 ```
+RPi 3...
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz -C /opt
+
+```
+
+
+
 Per the fine manuals, it's not best practice to run Splunk as root
 https://docs.splunk.com/Documentation/Splunk/8.2.2/Installation/RunSplunkasadifferenttornon-rootuser
 
@@ -91,35 +106,7 @@ pi@raspberrypi:~/rpi-sense-hat-uf $
 
 ```
 
-### Link
-Thanks to https://beaconsandwich.co.uk/2019/08/14/wlan-monitoring-splunking-on-pi/
-```
-sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
-```
-Why? Splunk UF has been Compiled with gcc, not native RPi compiler (hypothesis - should check at some point)
 
-If you get an error, just whack a `--force` on the end...
-```
-pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
-ln: failed to create symbolic link '/lib/ld-linux.so.3': File exists
-pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3 --force
-pi@raspberrypi:~/rpi-sense-hat-uf $ 
-```
-This is what fixes the error
-```
-pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
-bash: ./splunk: cannot execute binary file: Exec format error
-pi@raspberrypi:/opt/splunkforwarder/bin $ 
-```
-Before and after
-```
-pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
-lrwxrwxrwx 1 root root 24 May  8 00:42 ld-linux.so.3 -> /lib/ld-linux-armhf.so.3
-pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
-lrwxrwxrwx 1 root root 38 Oct 22 18:24 ld-linux.so.3 -> /lib/arm-linux-gnueabihf/ld-linux.so.3
-pi@raspberrypi:/lib $ 
-```
-BTW - this didn't work for me LOL
 
 
 ### ChangeDir to $SPLUNK_HOME/bin
@@ -130,6 +117,15 @@ pi@raspberrypi:/opt/splunkforwarder/bin $
 
 ### Now accept the EULA
 ```
+./splunk start --accept-license
+```
+__NOTE__: If you get the error `bash: ./splunk: cannot execute binary file: Exec format error`, you installed the wrong version on your RPI 3  
+Backtrack as follows
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo rm -rf /opt/splunkforwarder
+pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
+pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 ./splunk start --accept-license
 ```
 
@@ -190,3 +186,36 @@ dtoverlay=rpi-sense
 ```
 Reboot.
 
+# other stuff that may or may not help
+
+
+
+### Link the 
+Thanks to https://beaconsandwich.co.uk/2019/08/14/wlan-monitoring-splunking-on-pi/
+```
+sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
+```
+Why? Splunk UF has been Compiled with gcc, not native RPi compiler (hypothesis - should check at some point)
+
+If you get an error, just whack a `--force` on the end...
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
+ln: failed to create symbolic link '/lib/ld-linux.so.3': File exists
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3 --force
+pi@raspberrypi:~/rpi-sense-hat-uf $ 
+```
+This is what fixes the error
+```
+pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
+bash: ./splunk: cannot execute binary file: Exec format error
+pi@raspberrypi:/opt/splunkforwarder/bin $ 
+```
+Before and after
+```
+pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
+lrwxrwxrwx 1 root root 24 May  8 00:42 ld-linux.so.3 -> /lib/ld-linux-armhf.so.3
+pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
+lrwxrwxrwx 1 root root 38 Oct 22 18:24 ld-linux.so.3 -> /lib/arm-linux-gnueabihf/ld-linux.so.3
+pi@raspberrypi:/lib $ 
+```
+BTW - this didn't work for me LOL
