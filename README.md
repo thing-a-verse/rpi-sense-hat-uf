@@ -212,6 +212,24 @@ This pemits you to control the configuration of the UF from a central location
 ./splunk set deploy-poll 10.10.10.10:8089
 ```
 
+
+### Configure the UF to read our logfile
+__IMPORTANT__ - Don't miss this step, or you won't log anything
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ cp inputs.conf $SPLUNK_HOME/etc/system/local
+
+```
+
+The configuration is
+```
+[monitor:///home/pi/rpi-sense-hat-uf/data.csv]
+sourcetype=rpi-sense-hat
+index=rpi 
+```
+
+You might like to check the `inputs.conf` file doesn't already exist, and merge your content if it does, but as this is a fresh install, it should not yet exist.
+__NB__: Always put your configs inb `../local`, not `../default` which is tempting, but wrong.
+
 ### Configure the UF to start at boot
 
 ```
