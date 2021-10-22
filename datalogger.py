@@ -61,7 +61,8 @@ def display_temp():
 # Function to collect the data
 # NB: Needs to logrotate occasionally ?
 def collect_data():
-    with open('data.csv', 'w', newline='') as fd:
+    # Need full path so that systemd doesn't write to /
+    with open('/home/pi/rpi-sense-hat-uf/data.csv', 'w', newline='') as fd:
 
         # open the file handle
         data_writer = writer(fd)
