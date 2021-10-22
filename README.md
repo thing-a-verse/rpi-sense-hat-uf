@@ -54,13 +54,74 @@ Run the fetch program
 $ ./fetchSplunkUF.py
 ```
 # Install the UF
+
 Try reading the fine manuals, here https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Abouttheuniversalforwarder
 Specifically: https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Installanixuniversalforwarder
 
 or
 
-Install it as the pi user as follows
+### Install it as the pi user as follows
 
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz -C /opt
+
+```
+Per the fine manuals, it's not best practice to run Splunk as root
+https://docs.splunk.com/Documentation/Splunk/8.2.2/Installation/RunSplunkasadifferenttornon-rootuser
+
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
+
+```
+
+### Configure $SPLUNK_HOME
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ vi ~/.profile 
+```
+Add the follongline to the bottom
+```
+export SPLUNK_HOME=/opt/splunkforwarder
+```
+Don't forget to re-source the `.profile` (or close the terminal windows and re-open a new one)
+```
+pi@raspberrypi:~/rpi-sense-hat-uf $ . ~/.profile
+pi@raspberrypi:~/rpi-sense-hat-uf $ echo $SPLUNK_HOME
+/opt/splunkforwarder
+pi@raspberrypi:~/rpi-sense-hat-uf $ 
+
+```
+
+### ChangeDir to $SPLUNK_HOME/bin
+```
+pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
+pi@raspberrypi:/opt/splunkforwarder/bin $
+```
+
+### Now accept the EULA
+```
+./splunk start --accept-license
+```
+
+### Configure the UF to send data 
+(replace 10.10.10.10 with the IP addr of your heavy fowrarder or indexer) 
+```
+./splunk add forward-server 10.10.10.10:9997
+```
+
+### (Optionally) Configure the UF as a deplyment client
+This pemits you to control the configuration of the UF from a central location
+(replace 10.10.10.10 with the IP addr of your deployment server) 
+```
+./splunk set deploy-poll 10.10.10.10:8089
+```
+
+### Configure the UF to start at boot
+
+
+### Configure the datalogger to start at boot
+
+
+## Reboot !
 
 
 
