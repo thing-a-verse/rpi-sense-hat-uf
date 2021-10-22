@@ -91,6 +91,14 @@ pi@raspberrypi:~/rpi-sense-hat-uf $
 
 ```
 
+### Link
+Thanks to https://beaconsandwich.co.uk/2019/08/14/wlan-monitoring-splunking-on-pi/
+```
+sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
+```
+Why? Splunk UF has been Compiled with gcc, not native RPi compiler (hypothesis - should check at some point)
+
+
 ### ChangeDir to $SPLUNK_HOME/bin
 ```
 pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
