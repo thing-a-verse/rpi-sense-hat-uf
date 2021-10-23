@@ -3,6 +3,8 @@ from sense_hat import SenseHat
 from datetime import datetime
 from csv import writer
 import time
+import logging
+from logging.handlers import RotatingFileHandler
 
 # SenseHat object
 sense = SenseHat()
@@ -15,6 +17,19 @@ green  = (0,255,0)
 black  = (0,0,0)
 white  = (255,255,255)
 
+# Function to handle logrotation
+def create_rotating_log(path):
+    #
+    # Create a rotating log
+    #
+    logger = logging.getLogger("Rotating Log")
+    logger.setLevel(logging.INFO)
+  
+    handler= RotatingFileHandler(path, maxBytes=1000000, backupCount=2)
+ 
+    logger.addHandler(handler)
+
+    return logger
 
 # Function tp sense the data
 def get_sense_data():
@@ -83,8 +98,23 @@ def collect_data():
             # sample rate
             time.sleep(10)
 
+def log_data():
+    # Similar to collect_dat, but use logging with log rotation
+    logger = create_rotating_log ('/home/pi/rpi-sense-hat-uf/data.csv')
+
+    # kinda forever
+    while True:
+        data = get_sense_data()
+        logger.info (data)
+
+        display_temp()
+
+        # sample rate
+        time.sleep(10)
+
 def run():
-    collect_data()    
+#    collect_data()    
+    log_data()
 
 run()
 
