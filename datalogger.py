@@ -35,7 +35,12 @@ def create_rotating_log(path):
 def get_sense_data():
     sense_data = []
     
-    sense_data.append(datetime.now())
+    
+    # Human Readable
+    sense_data.append(str(datetime.now()))
+
+    # Unix time
+    sense_data.append("epoch="+str(datetime.timestamp(datetime.now())))
 
     sense_data.append("temperature="+str(sense.get_temperature()))
     sense_data.append("pressure="+str(sense.get_pressure()))
@@ -105,7 +110,7 @@ def log_data():
     # kinda forever
     while True:
         data = get_sense_data()
-        logger.info (data)
+        logger.info (', '.join(data))
 
         display_temp()
 
