@@ -18,7 +18,7 @@ $ git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git
 In a terminal window, Start the sensor
 ```
 $ cd rpi-sense-hat-uf
-$ ./datalog.py
+$ ./datalogger.py
 ```
 
 In another terminal windows, Check the data is being generated. If it's working you'll also see
