@@ -205,6 +205,14 @@ Done
 ```
 ./splunk add forward-server 10.10.10.10:9997
 ```
+To display your config
+```
+splunk list forward-server
+```
+To delete it if you made a mistake
+```
+splunk remove forward-server 10.10.10.10:9997
+```
 
 ### (Optionally) Configure the UF as a deplyment client
 This pemits you to control the configuration of the UF from a central location
