@@ -201,7 +201,7 @@ Done
 
 
 ### Configure the UF to send data 
-(replace 10.10.10.10 with the IP addr of your heavy fowrarder or indexer) 
+(replace 10.10.10.10 with the IP addr of your heavy forwarder or indexer) 
 ```
 splunk add forward-server 10.10.10.10:9997
 ```
@@ -214,7 +214,7 @@ To delete it if you made a mistake
 splunk remove forward-server 10.10.10.10:9997
 ```
 
-### (Optionally) Configure the UF as a deplyment client
+### (Optionally) Configure the UF as a deployment client
 This pemits you to control the configuration of the UF from a central location
 (replace 10.10.10.10 with the IP addr of your deployment server) 
 ```
@@ -270,8 +270,6 @@ sudo reboot
 
 # Testing for Success
 If it's working, there should be a temp on the display every 10 seconds.
-
-To test if splunk is forwarding...
 
 ### Is splunk running?
 ```
