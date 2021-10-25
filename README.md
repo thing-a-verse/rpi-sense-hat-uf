@@ -560,3 +560,75 @@ lrwxrwxrwx 1 root root 38 Oct 22 18:24 ld-linux.so.3 -> /lib/arm-linux-gnueabihf
 pi@raspberrypi:/lib $ 
 ```
 BTW - this didn't work for me LOL
+
+# Time and date\
+So - the data is in Splunk - but the time is wrong??
+
+Probably you need to get NTP or timedatectl working
+
+```
+pi@raspberrypi:~ $ timedatectl status
+               Local time: Mon 2021-10-25 11:15:36 AEDT
+           Universal time: Mon 2021-10-25 00:15:36 UTC
+                 RTC time: n/a
+                Time zone: Australia/Sydney (AEDT, +1100)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+pi@raspberrypi:~ $ date
+Mon 25 Oct 2021 11:15:51 AM AEDT
+```
+
+If this incorrect (e.g. it reads `inactive` or synchronised is `no`)
+
+Locate your NTP server and make sure you can ping it.
+
+## Use `timedatectl`
+
+Locate your timezobne (e/g Sydney)
+```
+pi@raspberrypi:~ $ sudo timedatectl list-timezones | grep Sydney
+```
+Then set this timezone
+```
+pi@raspberrypi:~ $ sudo timedatectl set-timezone Austraklia/Sydney
+```
+Edit `timesyncd.conbf`
+```
+pi@raspberrypi:~ $ sudo vi /etc/systemd/timesyncd.conf
+```
+
+
+```
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+#
+# Entries in this file show the compile time defaults.
+# You can change settings by editing this file.
+# Defaults can be restored by simply deleting this file.
+#
+# See timesyncd.conf(5) for details.
+
+[Time]
+NTP=10.10.10.1
+Fallback=10.10.10.2
+#FallbackNTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org
+RootDistanceMaxSec=5
+PollIntervalMinSec=32
+PollIntervalMaxSec=2048
+```
+
+Restart NTP (see3ms superfluous ?)\
+```
+pi@raspberrypi:~ $ sudo service ntp restart\
+```
+
+and reboot...
+
+
+__IMPORTANT__: It takes a bit of time to sync, but once it's working you see `synchronised:yes`
+## Use `NTP`
