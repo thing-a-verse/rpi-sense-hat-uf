@@ -5,27 +5,27 @@ Raspberry Pi - Sense Hat to Splunk UF
 ## Install the sense-hat libraries for RPi. 
 It is probably already installed, but if not ...
 ```
-$ sudo apt-get install sense-hat
+pi@raspberrypi:~ $ sudo apt-get install sense-hat
 ```
 
 ## Clone this repo
 ```
-$ git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git
+pi@raspberrypi:~ $ git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git
 ```
 
 
 ## Start the sensor
 In a terminal window, Start the sensor
 ```
-$ cd rpi-sense-hat-uf
-$ ./datalogger.py
+pi@raspberrypi:~ $ cd rpi-sense-hat-uf
+pi@raspberrypi:~/rpi-sense-hat-uf $ ./datalogger.py
 ```
 
 In another terminal windows, Check the data is being generated. If it's working you'll also see
 the temperature displayed on the LED display
 ```
-$ cd rpi-sense-hat-uf
-$ tail -f data.csv
+pi@raspberrypi:~ $ cd rpi-sense-hat-uf
+pi@raspberrypi:~/rpi-sense-hat-uf $ tail -f data.csv
 ```
 
 
@@ -47,18 +47,18 @@ Accept the Software Agreement, and download the `.tgz` file
 ### Method 2
 If you are using RPi 4 ... You can use ARMv8 code in the latest veresion 8.2.2.1 (or whatever)
 ```
-$ wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
+pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
 
 
 ```
 or, if you have an RPi 3 ... get the older ARMv6 code from v8.1.4
 ```
-wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
+pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
 ```
 ### Method 3
 Run the fetch program
 ```
-$ ./fetchSplunkUF.py
+pi@raspberrypi:~/rpi-sense-hat-uf $ ./fetchSplunkUF.py
 ```
 # Install the UF
 
@@ -202,28 +202,32 @@ Done
 
 ### Configure the UF to send data 
 (replace 10.10.10.10 with the IP addr of your heavy forwarder or indexer) 
+
+Since `$SPLUNK_HOME` is in the path, we can run this from any directory.
 ```
-splunk add forward-server 10.10.10.10:9997
+pi@raspberrypi:~ $ splunk add forward-server 10.10.10.10:9997
 ```
 To display your config
 ```
-splunk list forward-server
+pi@raspberrypi:~ $ splunk list forward-server
 ```
 To delete it if you made a mistake
 ```
-splunk remove forward-server 10.10.10.10:9997
+pi@raspberrypi:~ $ splunk remove forward-server 10.10.10.10:9997
 ```
 
 ### (Optionally) Configure the UF as a deployment client
 This pemits you to control the configuration of the UF from a central location
 (replace 10.10.10.10 with the IP addr of your deployment server) 
 ```
-splunk set deploy-poll 10.10.10.10:8089
+pi@raspberrypi:~ $ splunk set deploy-poll 10.10.10.10:8089
 ```
 
 
 ### Configure the UF to read our logfile
 __IMPORTANT__ - Don't miss this step, or you won't log anything
+
+
 ```
 pi@raspberrypi:~/rpi-sense-hat-uf $ cp inputs.conf $SPLUNK_HOME/etc/system/local
 
@@ -265,7 +269,7 @@ Created symlink /etc/systemd/system/multi-user.target.wants/datalogger.service â
 
 
 ```
-sudo reboot
+pi@raspberrypi:~ $ sudo reboot
 ```
 
 # Testing for Success
@@ -517,7 +521,7 @@ OSError: Cannot detect RPi-Sense FB device
 Try this: Edit `/boot/config.txt`
 
 ```
-sudo vi /boot/config.txt
+pi@raspberrypi:~ $ sudo vi /boot/config.txt
 ```
 Add the following line at the very end.
 ```
