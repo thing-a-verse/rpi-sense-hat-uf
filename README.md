@@ -250,7 +250,7 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/splunkfor
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo cp datalogger.service /lib/systemd/system
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/datalogger.service 
 ```
-### Configure systemmd
+### Configure systemd
 Now the unit files have been defined, we need to tell systemd to start it during the boot sequence:
 ```
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl daemon-reload
