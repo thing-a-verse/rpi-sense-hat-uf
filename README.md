@@ -241,7 +241,7 @@ index=rpi
 ```
 
 You might like to check the `inputs.conf` file doesn't already exist, and merge your content if it does, but as this is a fresh install, it should not yet exist.
-__NB__: Always put your configs inb `../local`, not `../default` which is tempting, but wrong.
+__NB__: Always put your configs into `../local`, not `../default` which is tempting, but wrong.
 
 ### Configure the UF to start at boot
 
