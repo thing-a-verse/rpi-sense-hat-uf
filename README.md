@@ -93,7 +93,7 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
 ```
 pi@raspberrypi:~/rpi-sense-hat-uf $ vi ~/.profile 
 ```
-Add the follongline to the bottom
+Add the following to the bottom
 ```
 export SPLUNK_HOME=/opt/splunkforwarder
 export PATH=$PATH:$SPLUNK_HOME/bin
