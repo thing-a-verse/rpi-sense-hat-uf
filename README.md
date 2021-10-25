@@ -646,4 +646,4 @@ __IMPORTANT__: It takes a bit of time to sync, but once it's working you see `sy
 sudo apt install ntp
 ```
 
-The fine manuals will explain how to configure it, but you ought to be fine with `timedatctl` above.
+The fine manuals will explain how to configure it, but you ought to be fine with `timedatectl` above.
