@@ -585,19 +585,23 @@ Locate your NTP server and make sure you can ping it.
 
 ## Use `timedatectl`
 
-Locate your timezobne (e/g Sydney)
+Locate your timezone (e.g. Sydney)
 ```
 pi@raspberrypi:~ $ sudo timedatectl list-timezones | grep Sydney
+Australia/Sydney
+pi@raspberrypi:~ $
 ```
 Then set this timezone
 ```
-pi@raspberrypi:~ $ sudo timedatectl set-timezone Austraklia/Sydney
+pi@raspberrypi:~ $ sudo timedatectl set-timezone Australia/Sydney
+pi@raspberrypi:~ $
 ```
-Edit `timesyncd.conbf`
+Edit `timesyncd.conf`
 ```
 pi@raspberrypi:~ $ sudo vi /etc/systemd/timesyncd.conf
+pi@raspberrypi:~ $
 ```
-
+Configure your NTP server in the clause `NTP=`
 
 ```
 #  This file is part of systemd.
@@ -622,15 +626,22 @@ PollIntervalMinSec=32
 PollIntervalMaxSec=2048
 ```
 
-Restart NTP (see3ms superfluous ?)\
+Restart NTP (seems superfluous ?)\
 ```
-pi@raspberrypi:~ $ sudo service ntp restart\
+pi@raspberrypi:~ $ sudo service ntp restart
+pi@raspberrypi:~ $
 ```
 
+
 and reboot...
+```
+pi@raspberrypi:~ $ sudo reboot
+```
 
 
 __IMPORTANT__: It takes a bit of time to sync, but once it's working you see `synchronised:yes`
+
+
 ## Use `NTP`
 
 ```
