@@ -561,10 +561,10 @@ pi@raspberrypi:/lib $
 ```
 BTW - this didn't work for me LOL
 
-# Time and date\
+# Time and date
 So - the data is in Splunk - but the time is wrong??
 
-Probably you need to get NTP or timedatectl working
+Probably you need to get NTP or timedatectl working. Here's an example of correctly configured `timedatectl`:
 
 ```
 pi@raspberrypi:~ $ timedatectl status
@@ -632,3 +632,9 @@ and reboot...
 
 __IMPORTANT__: It takes a bit of time to sync, but once it's working you see `synchronised:yes`
 ## Use `NTP`
+
+```
+sudo apt install ntp
+```
+
+The fine manuals will explain how to configure it, but you ought to be fine with `timedatctl` above.
