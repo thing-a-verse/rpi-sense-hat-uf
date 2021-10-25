@@ -203,7 +203,7 @@ Done
 ### Configure the UF to send data 
 (replace 10.10.10.10 with the IP addr of your heavy fowrarder or indexer) 
 ```
-./splunk add forward-server 10.10.10.10:9997
+splunk add forward-server 10.10.10.10:9997
 ```
 To display your config
 ```
@@ -218,7 +218,7 @@ splunk remove forward-server 10.10.10.10:9997
 This pemits you to control the configuration of the UF from a central location
 (replace 10.10.10.10 with the IP addr of your deployment server) 
 ```
-./splunk set deploy-poll 10.10.10.10:8089
+splunk set deploy-poll 10.10.10.10:8089
 ```
 
 
