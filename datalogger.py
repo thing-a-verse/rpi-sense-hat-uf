@@ -24,18 +24,15 @@ def create_rotating_log(path):
     #
     logger = logging.getLogger("Rotating Log")
     logger.setLevel(logging.INFO)
-  
     handler= RotatingFileHandler(path, maxBytes=1000000, backupCount=2)
- 
     logger.addHandler(handler)
 
     return logger
 
-# Function tp sense the data
+# Function to sense the data
 def get_sense_data():
     sense_data = []
-    
-    
+     
     # Human Readable
     sense_data.append(str(datetime.now()))
 
