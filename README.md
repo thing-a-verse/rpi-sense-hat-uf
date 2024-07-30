@@ -4,26 +4,26 @@ Raspberry Pi - Sense Hat to Splunk UF
 # Installation
 ## Install the sense-hat libraries for RPi. 
 It is probably already installed, but if not ...
-```
+```bash
 pi@raspberrypi:~ $ sudo apt-get install sense-hat
 ```
 
 ## Clone this repo
-```
+```bash
 pi@raspberrypi:~ $ git clone https://github.com/thing-a-verse/rpi-sense-hat-uf.git
 ```
 
 
 ## Start the sensor
 In a terminal window, Start the sensor
-```
+```bash
 pi@raspberrypi:~ $ cd rpi-sense-hat-uf
 pi@raspberrypi:~/rpi-sense-hat-uf $ ./datalogger.py
 ```
 
 In another terminal windows, Check the data is being generated. If it's working you'll also see
 the temperature displayed on the LED display
-```
+```bash
 pi@raspberrypi:~ $ cd rpi-sense-hat-uf
 pi@raspberrypi:~/rpi-sense-hat-uf $ tail -f data.csv
 ```
@@ -46,37 +46,34 @@ Accept the Software Agreement, and download the `.tgz` file
 
 ### Method 2
 If you are using RPi 4 ... You can use ARMv8 code in the latest veresion 8.2.2.1 (or whatever)
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz'
-
-
 ```
 or, if you have an RPi 3 ... get the older ARMv6 code from v8.1.4
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
 ```
 ### Method 3
 Run the fetch program
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ ./fetchSplunkUF.py
 ```
 # Install the UF
 
-Try reading the fine manuals, here https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Abouttheuniversalforwarder
-Specifically: https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Installanixuniversalforwarder
+Try [reading the fine manuals](https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Abouttheuniversalforwarder)
+Specifically: [Installation](https://docs.splunk.com/Documentation/Forwarder/8.2.2/Forwarder/Installanixuniversalforwarder)
 
 or
 
 ### Install it as the pi user as follows
 RPi 4...
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-armv8.tgz -C /opt
 
 ```
 RPi 3...
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz -C /opt
-
 ```
 
 
@@ -84,22 +81,22 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.1.4-17f862b
 Per the fine manuals, it's not best practice to run Splunk as root
 https://docs.splunk.com/Documentation/Splunk/8.2.2/Installation/RunSplunkasadifferenttornon-rootuser
 
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
 
 ```
 
 ### Configure $SPLUNK_HOME
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ vi ~/.profile 
 ```
 Add the following to the bottom
-```
+```bash
 export SPLUNK_HOME=/opt/splunkforwarder
 export PATH=$PATH:$SPLUNK_HOME/bin
 ```
 Don't forget to re-source the `.profile` (or close the terminal windows and re-open a new one)
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ . ~/.profile
 pi@raspberrypi:~/rpi-sense-hat-uf $ echo $SPLUNK_HOME
 /opt/splunkforwarder
@@ -111,18 +108,18 @@ pi@raspberrypi:~/rpi-sense-hat-uf $
 
 
 ### ChangeDir to $SPLUNK_HOME/bin
-```
+```bash
 pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 pi@raspberrypi:/opt/splunkforwarder/bin $
 ```
 
 ### Now accept the EULA
-```
+```bash
 ./splunk start --accept-license
 ```
 __NOTE__: If you get the error `bash: ./splunk: cannot execute binary file: Exec format error`, you installed the wrong version on your RPI 3  
 Backtrack as follows
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo rm -rf /opt/splunkforwarder
 pi@raspberrypi:~/rpi-sense-hat-uf $ wget -O splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz 'https://download.splunk.com/products/universalforwarder/releases/8.1.4/linux/splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz'
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo tar -xvsf splunkforwarder-8.1.4-17f862b42a7c-Linux-arm.tgz -C /opt
@@ -134,7 +131,7 @@ pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 
 
 If successful, you'll see
-```
+```bash
 pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
 
 This appears to be your first time running this version of Splunk.
@@ -153,7 +150,7 @@ Your choice, i use:
 
 
 Splunk should start
-```
+```bash
 pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
 
 This appears to be your first time running this version of Splunk.
@@ -204,22 +201,22 @@ Done
 (replace 10.10.10.10 with the IP addr of your heavy forwarder or indexer) 
 
 Since `$SPLUNK_HOME` is in the path, we can run this from any directory.
-```
+```bash
 pi@raspberrypi:~ $ splunk add forward-server 10.10.10.10:9997
 ```
 To display your config
-```
+```bash
 pi@raspberrypi:~ $ splunk list forward-server
 ```
 To delete it if you made a mistake
-```
+```bash
 pi@raspberrypi:~ $ splunk remove forward-server 10.10.10.10:9997
 ```
 
 ### (Optionally) Configure the UF as a deployment client
 This pemits you to control the configuration of the UF from a central location
 (replace 10.10.10.10 with the IP addr of your deployment server) 
-```
+```bash
 pi@raspberrypi:~ $ splunk set deploy-poll 10.10.10.10:8089
 ```
 
@@ -228,13 +225,13 @@ pi@raspberrypi:~ $ splunk set deploy-poll 10.10.10.10:8089
 __IMPORTANT__ - Don't miss this step, or you won't log anything
 
 
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ cp inputs.conf $SPLUNK_HOME/etc/system/local
 
 ```
 
 The configuration is
-```
+```bash
 [monitor:///home/pi/rpi-sense-hat-uf/data.csv]
 sourcetype=rpi-sense-hat
 index=rpi 
@@ -245,18 +242,18 @@ __NB__: Always put your configs into `../local`, not `../default` which is tempt
 
 ### Configure the UF to start at boot
 
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo cp splunkforwarder.service /lib/systemd/system
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/splunkforwarder.service 
 ```
 ### Configure the datalogger to start at boot
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo cp datalogger.service /lib/systemd/system
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chmod 644 /lib/systemd/system/datalogger.service 
 ```
 ### Configure systemd
 Now the unit files have been defined, we need to tell systemd to start it during the boot sequence:
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl daemon-reload
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo systemctl enable splunkforwarder.service
 Created symlink /etc/systemd/system/multi-user.target.wants/splunkforwarder.service â†’ /lib/systemd/system/splunkforwarder.service.
@@ -268,7 +265,7 @@ Created symlink /etc/systemd/system/multi-user.target.wants/datalogger.service â
 ## Reboot !
 
 
-```
+```bash
 pi@raspberrypi:~ $ sudo reboot
 ```
 
@@ -276,14 +273,14 @@ pi@raspberrypi:~ $ sudo reboot
 If it's working, there should be a temp on the display every 10 seconds.
 
 ### Is splunk running?
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ splunk status
 splunkd is running (PID: 543).
 splunk helpers are running (PIDs: 974).
 pi@raspberrypi:~/rpi-sense-hat-uf $
 ```
 ### Is splunk reading my file
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ splunk list inputstatus
 Your session is invalid.  Please login.
 Splunk username: admin
