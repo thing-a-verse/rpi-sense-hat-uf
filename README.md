@@ -101,9 +101,7 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ . ~/.profile
 pi@raspberrypi:~/rpi-sense-hat-uf $ echo $SPLUNK_HOME
 /opt/splunkforwarder
 pi@raspberrypi:~/rpi-sense-hat-uf $ 
-
 ```
-
 
 
 
@@ -117,7 +115,10 @@ pi@raspberrypi:/opt/splunkforwarder/bin $
 ```bash
 ./splunk start --accept-license
 ```
-__NOTE__: If you get the error `bash: ./splunk: cannot execute binary file: Exec format error`, you installed the wrong version on your RPI 3  
+
+> [!TIP]
+> If you get the error `bash: ./splunk: cannot execute binary file: Exec format error`, you installed the wrong version on your RPI 3
+
 Backtrack as follows
 ```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo rm -rf /opt/splunkforwarder
@@ -127,8 +128,6 @@ pi@raspberrypi:~/rpi-sense-hat-uf $ sudo chown -R pi:pi /opt/splunkforwarder/
 pi@raspberrypi:~ $ cd $SPLUNK_HOME/bin
 ./splunk start --accept-license
 ```
-
-
 
 If successful, you'll see
 ```bash
@@ -222,12 +221,12 @@ pi@raspberrypi:~ $ splunk set deploy-poll 10.10.10.10:8089
 
 
 ### Configure the UF to read our logfile
-__IMPORTANT__ - Don't miss this step, or you won't log anything
+> [!IMPORTANT]
+> Don't miss this step, or you won't log anything
 
 
 ```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ cp inputs.conf $SPLUNK_HOME/etc/system/local
-
 ```
 
 The configuration is
@@ -238,7 +237,8 @@ index=rpi
 ```
 
 You might like to check the `inputs.conf` file doesn't already exist, and merge your content if it does, but as this is a fresh install, it should not yet exist.
-__NB__: Always put your configs into `../local`, not `../default` which is tempting, but wrong.
+> [!TIP]
+> Always put your configs into `../local`, not `../default` which is tempting, but wrong.
 
 ### Configure the UF to start at boot
 
@@ -495,7 +495,7 @@ There it is:
 
 # Testing and Errors
 Test with python
-``` 
+```bash
 pi@raspberrypi:~ $ python3
 Python 3.7.3 (default, Jan 22 2021, 20:04:44) 
 [GCC 8.3.0] on linux
@@ -507,7 +507,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 
 If you get this
-```
+```bash
 File "/home/pi/Desktop/PY Sense Hat/Rainbow.py", line 2, in <module>
 sense = SenseHat()
 File "usr/lib/python3/dist-packages/sense_hat/sense_hat.py", line 39, in init
@@ -517,11 +517,11 @@ OSError: Cannot detect RPi-Sense FB device
 
 Try this: Edit `/boot/config.txt`
 
-```
+```bash
 pi@raspberrypi:~ $ sudo vi /boot/config.txt
 ```
 Add the following line at the very end.
-```
+```conf
 dtoverlay=rpi-sense
 ```
 Reboot.
@@ -532,26 +532,26 @@ Reboot.
 
 ### Link the 
 Thanks to https://beaconsandwich.co.uk/2019/08/14/wlan-monitoring-splunking-on-pi/
-```
+```bash
 sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
 ```
 Why? Splunk UF has been Compiled with gcc, not native RPi compiler (hypothesis - should check at some point)
 
 If you get an error, just whack a `--force` on the end...
-```
+```bash
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3
 ln: failed to create symbolic link '/lib/ld-linux.so.3': File exists
 pi@raspberrypi:~/rpi-sense-hat-uf $ sudo ln -s /lib/arm-linux-gnueabihf/ld-linux.so.3 /lib/ld-linux.so.3 --force
 pi@raspberrypi:~/rpi-sense-hat-uf $ 
 ```
 This is what fixes the error
-```
+```bash
 pi@raspberrypi:/opt/splunkforwarder/bin $ ./splunk start --accept-license
 bash: ./splunk: cannot execute binary file: Exec format error
 pi@raspberrypi:/opt/splunkforwarder/bin $ 
 ```
 Before and after
-```
+```bash
 pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
 lrwxrwxrwx 1 root root 24 May  8 00:42 ld-linux.so.3 -> /lib/ld-linux-armhf.so.3
 pi@raspberrypi:/lib $ ls -al ld-linux.so.3 
@@ -565,7 +565,7 @@ So - the data is in Splunk - but the time is wrong??
 
 Probably you need to get NTP or timedatectl working. Here's an example of correctly configured `timedatectl`:
 
-```
+```bash
 pi@raspberrypi:~ $ timedatectl status
                Local time: Mon 2021-10-25 11:15:36 AEDT
            Universal time: Mon 2021-10-25 00:15:36 UTC
@@ -585,24 +585,24 @@ Locate your NTP server and make sure you can ping it.
 ## Use `timedatectl`
 
 Locate your timezone (e.g. Sydney)
-```
+```bash
 pi@raspberrypi:~ $ sudo timedatectl list-timezones | grep Sydney
 Australia/Sydney
 pi@raspberrypi:~ $
 ```
 Then set this timezone
-```
+```bash
 pi@raspberrypi:~ $ sudo timedatectl set-timezone Australia/Sydney
 pi@raspberrypi:~ $
 ```
 Edit `timesyncd.conf`
-```
+```bash
 pi@raspberrypi:~ $ sudo vi /etc/systemd/timesyncd.conf
 pi@raspberrypi:~ $
 ```
 Configure your NTP server in the clause `NTP=`
 
-```
+```conf
 #  This file is part of systemd.
 #
 #  systemd is free software; you can redistribute it and/or modify it
@@ -625,25 +625,26 @@ PollIntervalMinSec=32
 PollIntervalMaxSec=2048
 ```
 
-Restart NTP (seems superfluous ?)\
-```
+Restart NTP (seems superfluous ?)
+```bash
 pi@raspberrypi:~ $ sudo service ntp restart
 pi@raspberrypi:~ $
 ```
 
 
 and reboot...
-```
+```bash
 pi@raspberrypi:~ $ sudo reboot
 ```
 
 
-__IMPORTANT__: It takes a bit of time to sync, but once it's working you see `synchronised:yes`
+> [!TIP]
+> It takes a bit of time to sync, but once it's working you see `synchronised:yes`
 
 
 ## Use `NTP`
 
-```
+```bash
 sudo apt install ntp
 ```
 
